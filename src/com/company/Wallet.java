@@ -4,12 +4,19 @@ import java.util.*;
 
 public class Wallet
 {
+    int[] tabmoneyLimite = new int[15];
+    double[] tabprix = new double[] {500, 200, 100, 50, 20, 10, 5, 2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01};
+    int[] tabmoney = new int[15];
+
+    double money, rendu, compter;
 
     public static void main(String[] args)
     {
-        // money contient le prix donner par l'utilisateur, rendu contient le prix rendu par le programme et compter contient la même chose que money mais permet de fair les calcul dans les boucle sans toucher à money
-        double money, rendu, compter;
-        rendu = 0;
+        // création d'un objet Wallet afin d'appeller des variables et méthodes non static dans le main
+        Wallet w = new Wallet();
+
+        // money contient le prix donner par l'utilisateur, rendu contient le prix rendu par le programme et compter contient la même chose que money mais permet de fair les calculs dans les boucles sans toucher à money
+        w.rendu = 0.00;
 
         System.out.print("Donner un prix :");
         Scanner sc = new Scanner(System.in);
@@ -22,172 +29,190 @@ public class Wallet
             sc.next();
         }
 
-        money = sc.nextDouble();
-        sc.close();
-        compter = money;
+        w.money = sc.nextDouble();
+        w.compter = w.money;
 
-        int[] tabmoney = new int[15];
-        double[] tabprix = new double[] {500, 200, 100, 50, 20, 10, 5, 2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01};
+        // remplissage du tableau tabmoneyLimite
+        w.iniTabMoneyLimite();
 
         // initialise à 0 le tableau tabmoney contenant le nombre et le type de pièces utiliser pour arriver au prix saisie par l'utilisateur
-        for (int i : tabmoney)
+        for (int i : w.tabmoney)
         {
-            tabmoney[i] = 0;
+            w.tabmoney[i] = 0;
         }
 
         // boucle pour vérifier si on à rendu le prix exacte
-        while (rendu != money & compter > 0.00)
+        while (w.rendu != w.money & w.compter > 0.00)
         {
             // vérifie s'il reste au moins 500 euros à rendre
-            if (compter - 500.00 >= 0.00)
+            if (w.compter - 500.00 >= 0.00 & w.pieceDisponible(0))
             {
-                compter = compter - 500.00;
-                rendu = rendu + 500.00;
-                tabmoney[0] = tabmoney[0] + 1;
+                w.calcul(0);
             }
             // vérifie s'il reste au moins 200 euros à rendre
-            else if (compter - 200.00 >= 0.00)
+            else if (w.compter - 200.00 >= 0.00 & w.pieceDisponible(1))
             {
-                compter = compter -200.00;
-                rendu = rendu + 200.00;
-                tabmoney[1] = tabmoney[1] + 1;
+                w.calcul(1);
             }
             // vérifie s'il reste au moins 100 euros à rendre
-            else if (compter - 100.00 >= 0.00)
+            else if (w.compter - 100.00 >= 0.00 & w.pieceDisponible(2))
             {
-                compter = compter -100.00;
-                rendu = rendu + 100.00;
-                tabmoney[2] = tabmoney[2] + 1;
+                w.calcul(2);
             }
             // vérifie s'il reste au moins 50 euros à rendre
-            else if (compter - 50.00 >= 0.00)
+            else if (w.compter - 50.00 >= 0.00 & w.pieceDisponible(3))
             {
-                compter = compter -50.00;
-                rendu = rendu + 50.00;
-                tabmoney[3] = tabmoney[3] + 1;
+                w.calcul(3);
             }
             // vérifie s'il reste au moins 20 euros à rendre
-            else if (compter - 20.00 >= 0.00)
+            else if (w.compter - 20.00 >= 0.00 & w.pieceDisponible(4))
             {
-                compter = compter -20.00;
-                rendu = rendu + 20.00;
-                tabmoney[4] = tabmoney[4] + 1;
+                w.calcul(4);
             }
             // vérifie s'il reste au moins 10 euros à rendre
-            else if (compter - 10.00 >= 0.00)
+            else if (w.compter - 10.00 >= 0.00 & w.pieceDisponible(5))
             {
-                compter = compter -10.00;
-                rendu = rendu + 10.00;
-                tabmoney[5] = tabmoney[5] + 1;
+                w.calcul(5);
             }
             // vérifie s'il reste au moins 5 euros à rendre
-            else if (compter - 5.00 >= 0.00)
+            else if (w.compter - 5.00 >= 0.00 & w.pieceDisponible(6))
             {
-                compter = compter -5.00;
-                rendu = rendu + 5.00;
-                tabmoney[6] = tabmoney[6] + 1;
+                w.calcul(6);
             }
             // vérifie s'il reste au moins 2 euros à rendre
-            else if (compter - 2.00 >= 0.00)
+            else if (w.compter - 2.00 >= 0.00 & w.pieceDisponible(7))
             {
-                compter = compter -2.00;
-                rendu = rendu + 2.00;
-                tabmoney[7] = tabmoney[7] + 1;
+                w.calcul(7);
             }
             // vérifie s'il reste au moins 1 euro à rendre
-            else if (compter - 1.00 >= 0.00)
+            else if (w.compter - 1.00 >= 0.00 & w.pieceDisponible(8))
             {
-                compter = compter -1.00;
-                rendu = rendu + 1.00;
-                tabmoney[8] = tabmoney[8] + 1;
+                w.calcul(8);
             }
             // Vérifie s'il reste au moins 0,50 euro à rendre
-            else if (compter - 0.50 >= 0.00)
+            else if (w.compter - 0.50 >= 0.00 & w.pieceDisponible(9))
             {
-                compter = compter - 0.50;
-                rendu = rendu + 0.50;
-                tabmoney[9] = tabmoney[9] + 1;
+                w.calcul(9);
             }
             // Vérifie s'il reste au moins 0,20 euro à rendre
-            else if (compter - 0.20 >= 0.00)
+            else if (w.compter - 0.20 >= 0.00 & w.pieceDisponible(10))
             {
-                compter = compter - 0.20;
-                rendu = rendu + 0.20;
-                tabmoney[10] = tabmoney[10] + 1;
+                w.calcul(10);
             }
             // Vérifie s'il reste au moins 0,10 euro à rendre
-            else if (compter - 0.10 >= 0.00)
+            else if (w.compter - 0.10 >= 0.00 & w.pieceDisponible(11))
             {
-                compter = (compter - 0.10);
-                rendu = rendu + 0.10;
-                tabmoney[11] = tabmoney[11] + 1;
+                w.calcul(11);
             }
             // Vérifie s'il reste au moins 0,05 euro à rendre
-            else if (compter - 0.05 >= 0.00)
+            else if (w.compter - 0.05 >= 0.00 & w.pieceDisponible(12))
             {
-                compter = compter - 0.05;
-                rendu = rendu + 0.05;
-                tabmoney[12] = tabmoney[12] + 1;
+                w.calcul(12);
             }
             // Vérifie s'il reste au moins 0,02 euro à rendre
-            else if (compter - 0.02 >= 0.00)
+            else if (w.compter - 0.02 >= 0.00 & w.pieceDisponible(13))
             {
-                compter = compter - 0.02;
-                rendu = rendu + 0.02;
-                tabmoney[13] = tabmoney[13] + 1;
+                w.calcul(13);
             }
             // Vérifie s'il reste au moins 0,01 euro à rendre
-            else if (compter - 0.01 >= 0.00)
+            else if (w.compter - 0.01 >= 0.00 & w.pieceDisponible(14))
             {
-                compter = compter - 0.01;
-                rendu = rendu + 0.01;
-                tabmoney[14] = tabmoney[14] + 1;
+                w.calcul(14);
             }
             else
             {
                 // Vérifie s'il reste moins 0,01 euro à rendre
-                if(compter < 0.01)
+                if(w.compter < 0.01)
                 {
+                    break;
+                }
+                else if(!w.resteMoney(w.compter))
+                {
+                    System.out.println("\n \u001B[31m Veuillez nous excusez, il n'y a plus assez de pièces/billets pour atteindre le prix \u001B[0m");
                     break;
                 }
                 else
                 {
-                    System.out.println("money : " + money);
-                    System.out.println("rendu : " + rendu);
-                    System.out.println("compter : " + compter);
+                    System.out.println("money : " + w.money);
+                    System.out.println("rendu : " + w.rendu);
+                    System.out.println("compter : " + w.compter);
                     System.out.println(" il y a une erreur !");
                 }
             }
 
-            // Arrondi à la valeur supérieur afin de minimiser les approsimations lors des calculs précédant
-            rendu = Math.round(rendu*100)/100d;
-            compter = Math.round(compter*100)/100d;
+            // Arrondi à la valeur supérieur afin de minimiser les approximations lors des calculs précédant
+            w.rendu = Math.round(w.rendu*100)/100d;
+            w.compter = Math.round(w.compter*100)/100d;
         }
 
-        StringBuilder rep = new StringBuilder("\n");
+        StringBuilder rep = new StringBuilder("\n rendu : \n");
 
         // boucle pour afficher le nombre et le type de pièces/billets utiliser
-        for (int j = 0 ; j < tabmoney.length; j++)
+        for (int j = 0 ; j < w.tabmoney.length; j++)
         {
             // Pour les billets
             if (j < 7)
             {
                 // S'il y a au moins 1 billet
-                if(tabmoney[j] > 0)
+                if(w.tabmoney[j] > 0)
                 {
-                    rep.append("\u001B[32m il y a ").append(tabmoney[j]).append(" billet(s) de ").append(tabprix[j]).append("\u001B[0m ").append("\n");
+                    rep.append("\u001B[32m il y a ").append(w.tabmoney[j]).append(" billet(s) de ").append(w.tabprix[j]).append("\u001B[0m ").append("\n");
                 }
             }
             // Pour les pièces
             else
             {
                 // S'il y a au moins 1 pièce
-                if(tabmoney[j] > 0)
+                if(w.tabmoney[j] > 0)
                 {
-                    rep.append("\u001B[33m il y a ").append(tabmoney[j]).append(" pièce(s) de ").append(tabprix[j]).append("\u001B[0m").append("\n");
+                    rep.append("\u001B[33m il y a ").append(w.tabmoney[j]).append(" pièce(s) de ").append(w.tabprix[j]).append("\u001B[0m").append("\n");
                 }
             }
         }
         System.out.println(rep);
+        sc.close();
+    }
+
+    public void iniTabMoneyLimite()
+    {
+        Scanner sc = new Scanner(System.in);
+
+        for (int l = 0; l < tabmoney.length; l++)
+        {
+            if (l < 7)
+            {
+                System.out.print("Combien de billet(s) de " + tabprix[l] + " : ");
+            }
+            else
+            {
+                System.out.print("Combien de pièce(s) de " + tabprix[l] + " : ");
+            }
+            tabmoneyLimite[l] = sc.nextInt();
+        }
+    }
+
+    public void calcul(int i)
+    {
+        compter = compter - tabprix[i];
+        rendu = rendu + tabprix[i];
+        tabmoney[i] = tabmoney[i] + 1;
+        tabmoneyLimite[i] = tabmoneyLimite[i] - 1;
+    }
+
+    public boolean resteMoney(double rendre)
+    {
+        double reste = 0.00;
+
+        for (int i : tabmoneyLimite)
+        {
+            reste += tabmoneyLimite[i] * tabprix[i];
+        }
+
+        return reste - rendre >= 0;
+    }
+
+    public boolean pieceDisponible(int c)
+    {
+        return tabmoneyLimite[c] >= 1;
     }
 }
