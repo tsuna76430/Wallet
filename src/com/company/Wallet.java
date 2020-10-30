@@ -8,20 +8,21 @@ public class Wallet
     double[] tabprix = new double[] {500, 200, 100, 50, 20, 10, 5, 2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01};
     int[] tabmoney = new int[15];
 
+    // La variable money contient le prix donner par l'utilisateur, rendu contient le prix rendu par le programme et compter contient la même chose que money mais permet de fair les calculs dans les boucles sans toucher à money
     double money, rendu, compter;
 
     public static void main(String[] args)
     {
-        // création d'un objet Wallet afin d'appeller des variables et méthodes non static dans le main
+        // Création d'un objet Wallet afin d'appeller des variables et méthodes non static dans le main
         Wallet w = new Wallet();
 
-        // money contient le prix donner par l'utilisateur, rendu contient le prix rendu par le programme et compter contient la même chose que money mais permet de fair les calculs dans les boucles sans toucher à money
+        // La variable money contient le prix donner par l'utilisateur, rendu contient le prix rendu par le programme et compter contient la même chose que money mais permet de fair les calculs dans les boucles sans toucher à money
         w.rendu = 0.00;
 
         System.out.print("Donner un prix :");
         Scanner sc = new Scanner(System.in);
 
-        // boucle pour vérifier que la saisie utilisateur est un double, sinon il redemande jusqu'a son obtention
+        // Boucle pour vérifier que la saisie utilisateur est un double, sinon il redemande jusqu'a son obtention
         while(!sc.hasNextDouble())
         {
             System.out.println("\u001B[31m Votre nombre n'est pas nombre decimal de format ##,## \u001B[0m");
@@ -32,59 +33,59 @@ public class Wallet
         w.money = sc.nextDouble();
         w.compter = w.money;
 
-        // remplissage du tableau tabmoneyLimite
+        // Remplissage du tableau tabmoneyLimite
         w.iniTabMoneyLimite();
 
-        // initialise à 0 le tableau tabmoney contenant le nombre et le type de pièces utiliser pour arriver au prix saisie par l'utilisateur
+        // Initialise à 0 le tableau tabmoney contenant le nombre et le type de pièces utilisé pour arriver au prix saisie par l'utilisateur
         for (int i : w.tabmoney)
         {
             w.tabmoney[i] = 0;
         }
 
-        // boucle pour vérifier si on à rendu le prix exacte
+        // Boucle pour vérifier si on à rendu le prix exacte
         while (w.rendu != w.money & w.compter > 0.00)
         {
-            // vérifie s'il reste au moins 500 euros à rendre
+            // Vérifie s'il reste au moins 500 euros à rendre
             if (w.compter - 500.00 >= 0.00 & w.pieceDisponible(0))
             {
                 w.calcul(0);
             }
-            // vérifie s'il reste au moins 200 euros à rendre
+            // Vérifie s'il reste au moins 200 euros à rendre
             else if (w.compter - 200.00 >= 0.00 & w.pieceDisponible(1))
             {
                 w.calcul(1);
             }
-            // vérifie s'il reste au moins 100 euros à rendre
+            // Vérifie s'il reste au moins 100 euros à rendre
             else if (w.compter - 100.00 >= 0.00 & w.pieceDisponible(2))
             {
                 w.calcul(2);
             }
-            // vérifie s'il reste au moins 50 euros à rendre
+            // Vérifie s'il reste au moins 50 euros à rendre
             else if (w.compter - 50.00 >= 0.00 & w.pieceDisponible(3))
             {
                 w.calcul(3);
             }
-            // vérifie s'il reste au moins 20 euros à rendre
+            // Vérifie s'il reste au moins 20 euros à rendre
             else if (w.compter - 20.00 >= 0.00 & w.pieceDisponible(4))
             {
                 w.calcul(4);
             }
-            // vérifie s'il reste au moins 10 euros à rendre
+            // Vérifie s'il reste au moins 10 euros à rendre
             else if (w.compter - 10.00 >= 0.00 & w.pieceDisponible(5))
             {
                 w.calcul(5);
             }
-            // vérifie s'il reste au moins 5 euros à rendre
+            // Vérifie s'il reste au moins 5 euros à rendre
             else if (w.compter - 5.00 >= 0.00 & w.pieceDisponible(6))
             {
                 w.calcul(6);
             }
-            // vérifie s'il reste au moins 2 euros à rendre
+            // Vérifie s'il reste au moins 2 euros à rendre
             else if (w.compter - 2.00 >= 0.00 & w.pieceDisponible(7))
             {
                 w.calcul(7);
             }
-            // vérifie s'il reste au moins 1 euro à rendre
+            // Vérifie s'il reste au moins 1 euro à rendre
             else if (w.compter - 1.00 >= 0.00 & w.pieceDisponible(8))
             {
                 w.calcul(8);
@@ -137,14 +138,14 @@ public class Wallet
                 break;
             }
 
-            // Arrondi à la valeur supérieur afin de minimiser les approximations lors des calculs précédant
+            // Arrondi à la valeur supérieur afin de minimiser les approximations lors des calculs précédent
             w.rendu = Math.round(w.rendu*100)/100d;
             w.compter = Math.round(w.compter*100)/100d;
         }
 
         StringBuilder rep = new StringBuilder("\n Rendu : \n");
 
-        // boucle pour afficher le nombre et le type de pièces/billets utiliser
+        // Boucle pour afficher le nombre et le type de pièces/billets utilisés
         for (int j = 0 ; j < w.tabmoney.length; j++)
         {
             // Pour les billets
@@ -170,7 +171,7 @@ public class Wallet
         sc.close();
     }
 
-    // méthode pour initialiser tabmoneyLimite en demande combien de pièce/billets pour chaque tranche d'argent
+    // Méthode pour initialiser tabmoneyLimite en demande combien de pièces/billets pour chaque tranche d'argent
     public void iniTabMoneyLimite()
     {
         Scanner sc = new Scanner(System.in);
@@ -189,7 +190,7 @@ public class Wallet
         }
     }
 
-    // méthode pour calculer l'argent a rendre restant et pour modifier le nombre de pièce/billet limite disponible ainsi que le nombre de pièce/billet utilisé
+    // Méthode pour calculer l'argent à rendre restant et pour modifier le nombre de pièce/billet limite disponible ainsi que le nombre de pièce/billet utilisé
     public void calcul(int i)
     {
         compter = compter - tabprix[i];
@@ -198,7 +199,7 @@ public class Wallet
         tabmoneyLimite[i] = tabmoneyLimite[i] - 1;
     }
 
-    // méthode qui permet de savoir s'il y a assez d'argent pour atteindre le prix
+    // Méthode qui permet de savoir s'il y a assez d'argent pour atteindre le prix
     public boolean resteMoney(double rendre)
     {
         double reste = 0.00;
@@ -211,7 +212,7 @@ public class Wallet
         return reste - rendre >= 0;
     }
 
-    // méthode qui retourne s'il reste au moins 1 pièce/billet dans le tableau tabmoneyLimite à un indice c donné
+    // Méthode qui retourne s'il reste au moins 1 pièce/billet dans le tableau tabmoneyLimite à un indice c donné
     public boolean pieceDisponible(int c)
     {
         return tabmoneyLimite[c] >= 1;
