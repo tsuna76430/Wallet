@@ -121,23 +121,20 @@ public class Wallet
             }
             else
             {
-                // Vérifie s'il reste moins 0,01 euro à rendre
-                if(w.compter < 0.01)
+                // Vérifie s'il reste suffisament d'argent pour atteindre le prix demandé
+                if(!w.resteMoney(w.compter))
                 {
-                    break;
-                }
-                else if(!w.resteMoney(w.compter))
-                {
-                    System.out.println("\n \u001B[31m Veuillez nous excusez, il n'y a plus assez de pièces/billets pour atteindre le prix \u001B[0m");
-                    break;
+                    System.out.println("\n \u001B[31m" +" Veuillez nous excusez, il n'y a plus assez de pièces/billets pour atteindre le prix " +"\u001B[0m");
                 }
                 else
                 {
-                    System.out.println("money : " + w.money);
+                    System.out.println("\n" + "money : " + w.money);
                     System.out.println("rendu : " + w.rendu);
                     System.out.println("compter : " + w.compter);
-                    System.out.println(" il y a une erreur !");
+                    System.out.println("\u001B[31m" + "Il y a une erreur !" +"\u001B[0m");
+
                 }
+                break;
             }
 
             // Arrondi à la valeur supérieur afin de minimiser les approximations lors des calculs précédant
@@ -145,7 +142,7 @@ public class Wallet
             w.compter = Math.round(w.compter*100)/100d;
         }
 
-        StringBuilder rep = new StringBuilder("\n rendu : \n");
+        StringBuilder rep = new StringBuilder("\n Rendu : \n");
 
         // boucle pour afficher le nombre et le type de pièces/billets utiliser
         for (int j = 0 ; j < w.tabmoney.length; j++)
@@ -156,7 +153,7 @@ public class Wallet
                 // S'il y a au moins 1 billet
                 if(w.tabmoney[j] > 0)
                 {
-                    rep.append("\u001B[32m il y a ").append(w.tabmoney[j]).append(" billet(s) de ").append(w.tabprix[j]).append("\u001B[0m ").append("\n");
+                    rep.append("\u001B[32m    ").append(w.tabmoney[j]).append(" billet(s) de ").append(w.tabprix[j]).append("\u001B[0m ").append("\n");
                 }
             }
             // Pour les pièces
@@ -165,7 +162,7 @@ public class Wallet
                 // S'il y a au moins 1 pièce
                 if(w.tabmoney[j] > 0)
                 {
-                    rep.append("\u001B[33m il y a ").append(w.tabmoney[j]).append(" pièce(s) de ").append(w.tabprix[j]).append("\u001B[0m").append("\n");
+                    rep.append("\u001B[33m    ").append(w.tabmoney[j]).append(" pièce(s) de ").append(w.tabprix[j]).append("\u001B[0m").append("\n");
                 }
             }
         }
@@ -173,6 +170,7 @@ public class Wallet
         sc.close();
     }
 
+    // méthode pour initialiser tabmoneyLimite en demande combien de pièce/billets pour chaque tranche d'argent
     public void iniTabMoneyLimite()
     {
         Scanner sc = new Scanner(System.in);
@@ -191,6 +189,7 @@ public class Wallet
         }
     }
 
+    // méthode pour calculer l'argent a rendre restant et pour modifier le nombre de pièce/billet limite disponible ainsi que le nombre de pièce/billet utilisé
     public void calcul(int i)
     {
         compter = compter - tabprix[i];
@@ -199,6 +198,7 @@ public class Wallet
         tabmoneyLimite[i] = tabmoneyLimite[i] - 1;
     }
 
+    // méthode qui permet de savoir s'il y a assez d'argent pour atteindre le prix
     public boolean resteMoney(double rendre)
     {
         double reste = 0.00;
@@ -211,6 +211,7 @@ public class Wallet
         return reste - rendre >= 0;
     }
 
+    // méthode qui retourne s'il reste au moins 1 pièce/billet dans le tableau tabmoneyLimite à un indice c donné
     public boolean pieceDisponible(int c)
     {
         return tabmoneyLimite[c] >= 1;
