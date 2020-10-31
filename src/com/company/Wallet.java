@@ -4,12 +4,15 @@ import java.util.*;
 
 public class Wallet
 {
+    // tableau contenant le nombre de pièce(s)/billet(s) que l'on peut utiliser au maximum
     int[] tabmoneyLimite = new int[15];
-    double[] tabprix = new double[] {500, 200, 100, 50, 20, 10, 5, 2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01};
+    //tableau contenant le nombre de pièce(s)/billet(s) rendu
     int[] tabmoney = new int[15];
 
     // La variable money contient le prix donner par l'utilisateur, rendu contient le prix rendu par le programme et compter contient la même chose que money mais permet de fair les calculs dans les boucles sans toucher à money
     double money, rendu, compter;
+    //tableau contenant la valeur des différents pièces/billets
+    double[] tabprix = new double[] {500, 200, 100, 50, 20, 10, 5, 2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01};
 
     public static void main(String[] args)
     {
@@ -20,6 +23,7 @@ public class Wallet
         w.rendu = 0.00;
 
         System.out.print("Donner un prix :");
+        // Demande à l'utilisateur de saisir un prix
         Scanner sc = new Scanner(System.in);
 
         // Boucle pour vérifier que la saisie utilisateur est un double, sinon il redemande jusqu'a son obtention
@@ -143,6 +147,7 @@ public class Wallet
             w.compter = Math.round(w.compter*100)/100d;
         }
 
+        // chaine de caractère qui contient l'affichage final
         StringBuilder rep = new StringBuilder("\n Rendu : \n");
 
         // Boucle pour afficher le nombre et le type de pièces/billets utilisés
@@ -167,28 +172,40 @@ public class Wallet
                 }
             }
         }
+
+        rep.append("\n").append("Soit un total de : ") .append(w.rendu).append("€");
         System.out.println(rep);
         sc.close();
     }
+
 
     // Méthode pour initialiser tabmoneyLimite en demande combien de pièces/billets pour chaque tranche d'argent
     public void iniTabMoneyLimite()
     {
         Scanner sc = new Scanner(System.in);
+        String aff;
 
         for (int l = 0; l < tabmoney.length; l++)
         {
-            if (l < 7)
-            {
-                System.out.print("Combien de billet(s) de " + tabprix[l] + " : ");
-            }
-            else
-            {
-                System.out.print("Combien de pièce(s) de " + tabprix[l] + " : ");
-            }
+           if (l < 7)
+           {
+              aff = "Combien de billet(s) de " + tabprix[l] + " : ";
+           }
+           else
+           {
+              aff = "Combien de pièce(s) de " + tabprix[l] + " : ";
+           }
+
+           System.out.print(aff);
+           while (!sc.hasNextInt())
+           {
+               System.out.print(aff);
+               sc.next();
+           }
             tabmoneyLimite[l] = sc.nextInt();
         }
     }
+
 
     // Méthode pour calculer l'argent à rendre restant et pour modifier le nombre de pièce/billet limite disponible ainsi que le nombre de pièce/billet utilisé
     public void calcul(int i)
@@ -199,18 +216,27 @@ public class Wallet
         tabmoneyLimite[i] = tabmoneyLimite[i] - 1;
     }
 
+
     // Méthode qui permet de savoir s'il y a assez d'argent pour atteindre le prix
     public boolean resteMoney(double rendre)
     {
         double reste = 0.00;
 
-        for (int i : tabmoneyLimite)
+        for (int i = 0; i < tabmoneyLimite.length; i++)
         {
-            reste += tabmoneyLimite[i] * tabprix[i];
+            if(tabmoneyLimite[i] <= 0)
+            {
+                reste += 0;
+            }
+            else
+            {
+                reste += tabmoneyLimite[i] * tabprix[i];
+            }
         }
 
         return reste - rendre >= 0;
     }
+
 
     // Méthode qui retourne s'il reste au moins 1 pièce/billet dans le tableau tabmoneyLimite à un indice c donné
     public boolean pieceDisponible(int c)
