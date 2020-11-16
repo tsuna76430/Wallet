@@ -16,7 +16,7 @@ public class Wallet
     double[] tabprix = new double[] {500.00, 200.00, 100.00, 50.00, 20.00, 10.00, 5.00, 2.00, 1.00, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01};
 
     Decimal2 compter = new Decimal2();
-    Decimal2 rendu = new Decimal2();
+    Decimal2 rendu = new Decimal2(0,0);
     Decimal2 moneyValue = new Decimal2();
 
     public static void main(String[] args)

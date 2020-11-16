@@ -46,27 +46,26 @@ public class Decimal2 extends Decimal
         int tmp, tmp2;
         
         tmp = this.entier - d2.entier;
+        this.setEntier(tmp);
+
         tmp2 = this.reel - d2.reel;
         
         if (tmp2 < 0) 
         {
             tmp2 = tmp2 + 100;
-            tmp = tmp - 1;
+            this.setEntier(this.getEntier() -1);
         }
         
-        this.setEntier(tmp);
+
         this.setReel(tmp2);
     }
 
     // Methode getNumber
     public double getNumber() 
     {
-        double d;
         double decimal = this.reel;
-        
-        d = this.entier + decimal/100;
-        
-        return d;
+
+        return this.entier + decimal/100;
     }
 
 
@@ -88,11 +87,7 @@ public class Decimal2 extends Decimal
         if (part[1].length() == 1) 
         {
             b = b * 10;
-            this.setReel(b);
-        } 
-        else 
-        {
-            this.setReel(b);
         }
+        this.setReel(b);
     }
 }
