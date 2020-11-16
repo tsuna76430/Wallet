@@ -159,7 +159,7 @@ public class Wallet
                 // S'il y a au moins 1 billet
                 if(w.tabmoney[j] > 0)
                 {
-                    rep.append("\u001B[32m    ").append(w.tabmoney[j]).append(" billet(s) de ").append(w.tabprix[j]).append("\u001B[0m ").append("\n");
+                    rep.append("\u001B[32m    ").append(w.tabmoney[j]).append(" billet(s) de ").append(w.tabprix[j]).append(" €\u001B[0m ").append("\n");
                 }
             }
             // Pour les pièces
@@ -168,7 +168,7 @@ public class Wallet
                 // S'il y a au moins 1 pièce
                 if(w.tabmoney[j] > 0)
                 {
-                    rep.append("\u001B[33m    ").append(w.tabmoney[j]).append(" pièce(s) de ").append(w.tabprix[j]).append("\u001B[0m").append("\n");
+                    rep.append("\u001B[33m    ").append(w.tabmoney[j]).append(" pièce(s) de ").append(w.tabprix[j]).append(" €\u001B[0m").append("\n");
                 }
             }
         }
@@ -189,11 +189,11 @@ public class Wallet
         {
            if (l < 7)
            {
-              aff = "Combien de billet(s) de " + tabprix[l] + " : ";
+              aff = "Combien de billet(s) de " + tabprix[l] + "€ : ";
            }
            else
            {
-              aff = "Combien de pièce(s) de " + tabprix[l] + " : ";
+              aff = "Combien de pièce(s) de " + tabprix[l] + "€ : ";
            }
 
            System.out.print(aff);
