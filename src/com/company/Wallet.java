@@ -205,10 +205,12 @@ public class Wallet
     // Méthode pour calculer l'argent à rendre restant et pour modifier le nombre de pièce/billet limite disponible ainsi que le nombre de pièce/billet utilisé
     public void calcul(int i)
     {
+        // Calcul de l'argent restant à rendre
         this.moneyValue.setNumber(this.tabPrix[i]);
         this.compter.soustraction(this.moneyValue);
         this.rendu.addition(this.moneyValue);
 
+        // Modification des pièces/billets utilisés
         this.tabMoney[i] = this.tabMoney[i] + 1;
         this.tabMoneyLimite[i] = this.tabMoneyLimite[i] - 1;
     }
